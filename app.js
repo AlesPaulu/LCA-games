@@ -227,7 +227,7 @@
           m.dataset.group = g.id;
           stage.appendChild(m);
         });
-        const b = el('button', 'whatif-btn', px(c.x + 126.5, 796), `<span>💭</span>${tr(WHATIF[c.id].q)}`);
+        const b = el('button', 'whatif-btn', px(c.x + 126.5, 796), tr(WHATIF[c.id].q));
         b.dataset.whatif = c.id;
         stage.appendChild(b);
       });
@@ -274,7 +274,7 @@
 
   function renderTray() {
     trayItems.innerHTML = '';
-    const sections = game === 'g1' ? ['emp', 'in', 'prod', 'emi', 'photo'] : ['fn', 'fu', 'photo', 'tok'];
+    const sections = game === 'g1' ? ['photo', 'emp', 'in', 'prod', 'emi'] : ['photo', 'fn', 'fu', 'tok'];
     const dotColor = { emp: 'var(--emp)', in: 'var(--in)', prod: 'var(--prod)', emi: 'var(--emi)', fn: 'var(--emp)', fu: 'var(--prod)', photo: '#2a2d33', tok: 'var(--tok)' };
     let any = false;
     sections.forEach((type) => {
@@ -296,7 +296,7 @@
       trayItems.appendChild(sec);
     });
     if (!any || (game === 'g2' && trayItems.children.length === 1)) {
-      trayItems.insertAdjacentHTML('afterbegin', `<div class="tray-empty">✓ ${t('emptyTray')}</div>`);
+      trayItems.insertAdjacentHTML('afterbegin', `<div class="tray-empty">${t('emptyTray')}</div>`);
     }
   }
 
@@ -556,9 +556,10 @@
       });
       Object.values(GROUPS).forEach((g) => {
         const keys = g.slots.map((id) => P[id]).filter(Boolean);
+        const sum = keys.reduce((a, k) => a + TOKENS[k].value, 0);
         let st;
         if (!keys.length) st = 'empty';
-        else st = keys.length === g.count && keys.every((k) => k === g.token) ? 'ok' : 'bad';
+        else st = sum === g.count * TOKENS[g.token].value ? 'ok' : 'bad';
         res.status[g.id] = st;
         res[st]++;
         if (st !== 'ok') res.badTokens.push(g);
@@ -576,7 +577,7 @@
     feedback.className = 'feedback';
     if (res.ok === res.total) {
       feedback.classList.add('good');
-      feedback.textContent = '🎉 ' + t('allDone');
+      feedback.textContent = t('allDone');
       showSuccess();
     } else {
       feedback.classList.add('warn');
@@ -636,7 +637,7 @@
       save();
       renderItems();
       flash(g.slots[0]);
-      openModal({ title: '💡 ' + t('hint'), html: `<p class="lead">${tr(g.calc)}</p>`, actions: [{ label: t('ok'), primary: true }] });
+      openModal({ title: t('hint'), html: `<p class="lead">${tr(g.calc)}</p>`, actions: [{ label: t('ok'), primary: true }] });
       return;
     }
     toast(t('nothingToHint'));
@@ -699,7 +700,7 @@
 
   function showSuccess() {
     const T = game === 'g1' ? G1_TEXT[lang] : G2_TEXT[lang];
-    openModal({ title: '🎉 ' + T.successTitle, html: T.success, actions: [{ label: t('ok'), primary: true }] });
+    openModal({ title: T.successTitle, html: T.success, actions: [{ label: t('ok'), primary: true }] });
   }
 
   function showInfo(k) {
@@ -720,7 +721,7 @@
     const W = WHATIF[cid];
     const opts = W.options.map((o) => `<button class="option" data-opt="${o.id}">${tr(o)}</button>`).join('');
     openModal({
-      title: '💭 ' + tr(W.q),
+      title: tr(W.q),
       html: `<p class="lead">${tr(W.ask)}</p><p style="margin:10px 0 0;font-weight:600">${t('predict')}</p><div class="options">${opts}</div><div id="wi-result"></div>`,
       actions: [{ label: t('close') }],
     });
@@ -734,9 +735,12 @@
   function revealWhatIf(W, choice) {
     const box = $('#wi-result');
     let verdict;
-    if (W.correct == null) verdict = `<div class="verdict neutral">${t('guessNeutral')}</div>`;
-    else if (choice === W.correct) verdict = `<div class="verdict right">✓ ${t('guessRight')}</div>`;
-    else verdict = `<div class="verdict wrong">✕ ${t('guessWrong')}</div>`;
+    if (W.verdicts && W.verdicts[choice]) {
+      const v = W.verdicts[choice];
+      verdict = `<div class="verdict ${v.kind}">${tr(v)}</div>`;
+    } else if (W.correct == null) verdict = `<div class="verdict neutral">${t('guessNeutral')}</div>`;
+    else if (choice === W.correct) verdict = `<div class="verdict right">${t('guessRight')}</div>`;
+    else verdict = `<div class="verdict wrong">${t('guessWrong')}</div>`;
     const sl = W.slider;
     const unit = tr(sl.unit);
     box.innerHTML = `${verdict}<p>${tr(W.explain)}</p>
@@ -746,7 +750,7 @@
           <input type="range" min="${sl.min}" max="${sl.max}" step="${sl.step}" value="${sl.value}">
           <output></output></label>
         <div class="bars"></div>
-        <div class="break-even">⚖️ ${t('breakEven')} ${tr(W.breakEven)}.</div>
+        <div class="break-even">${t('breakEven')} ${tr(W.breakEven)}.</div>
       </div>`;
     const input = box.querySelector('input');
     const out = box.querySelector('output');
@@ -759,7 +763,7 @@
       const known = data.filter((d) => !d.unknown).map((d) => d.value);
       const min = Math.min(...known);
       bars.innerHTML = data.map((d) => {
-        const img = d.photo ? `<img src="img/${d.photo}.jpg" alt="">` : '<span class="noimg">👖</span>';
+        const img = d.photo ? `<img src="img/${d.photo}.jpg" alt="">` : '<span class="noimg"></span>';
         const pct = Math.max((d.value / maxVal) * 100, d.unknown ? 0 : 1.5);
         const val = d.unknown ? `0 ${t('gco2')} + ?` : `${fmt(d.value)} ${t('gco2')}`;
         return `<div class="bar-row">${img}<span>${tr(d.label)}</span><div class="bar-track"><div class="bar-fill${!d.unknown && d.value === min ? ' best' : ''}" style="width:${pct}%"></div><span class="bar-val">${val}</span></div></div>`;

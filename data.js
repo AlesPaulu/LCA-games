@@ -242,7 +242,7 @@ const G1_BLOCKS = [
       ['prod', 631, 170, 'water'], ['emp', 752, 80, 'waterman'] ],
     photo: [752, 108, 113, 85, 'ph_water'] },
   { id: 'energy', slots: [
-      ['in', 919, 78, 'procwater', true], ['in', 919, 108, 'fuels'], ['emi', 919, 138, 'fluegas'],
+      ['in', 919, 78, 'procwater'], ['in', 919, 108, 'fuels', true], ['emi', 919, 138, 'fluegas'],
       ['prod', 919, 168, 'energy'], ['emp', 1040, 78, 'energyman'] ],
     photo: [1040, 106, 113, 84, 'ph_energy'] },
   { id: 'chem', slots: [
@@ -301,7 +301,7 @@ const G1_TEXT = {
     introTitle: 'Životní cyklus chleba',
     intro: `
       <p class="lead">Koupíte v obchodě bochník chleba. Co všechno bylo potřeba, než se dostal do vašeho košíku? Poskládejte jeho životní cyklus!</p>
-      <div class="info-box"><strong>Co je LCA?</strong> Posuzování životního cyklu (LCA – <em>Life Cycle Assessment</em>) je metoda, která hodnotí dopady výrobku na životní prostředí „od kolébky do hrobu“ – od získání surovin přes výrobu a dopravu až po odpad. Jedním z prvních kroků je <strong>inventarizace</strong>: sepsat všechny procesy a to, co do nich vstupuje a vystupuje.</div>
+      <div class="info-box"><strong>Co je LCA?</strong> Posuzování životního cyklu (LCA – <em>Life Cycle Assessment</em>) je metoda, která hodnotí dopady výrobku na životní prostředí „od kolébky do hrobu“ – od získání surovin přes výrobu a dopravu až po odpad. Jedním z prvních kroků je <strong>inventarizace</strong>, jejímž cílem je sepsat všechny procesy a to, co do nich vstupuje a vystupuje.</div>
       <ol class="steps">
         <li>Každý blok na plátně je jeden <strong>proces</strong> (např. mlýn nebo pekárna). Kartičky ze zásobníku přetáhněte do správných bloků. Do kterého bloku kartička patří, musíte zjistit sami.</li>
         <li><strong>Barva</strong> kartičky říká, o co jde:
@@ -332,7 +332,7 @@ const G1_TEXT = {
     introTitle: 'The life cycle of bread',
     intro: `
       <p class="lead">You buy a loaf of bread in a shop. What did it take before it landed in your basket? Put its life cycle together!</p>
-      <div class="info-box"><strong>What is LCA?</strong> Life Cycle Assessment (LCA) is a method that evaluates the environmental impacts of a product “from cradle to grave” – from obtaining raw materials, through production and transport, all the way to waste. The first step is the <strong>inventory</strong>: listing all processes and everything that goes in and comes out of them.</div>
+      <div class="info-box"><strong>What is LCA?</strong> Life Cycle Assessment (LCA) is a method that evaluates the environmental impacts of a product “from cradle to grave” – from obtaining raw materials, through production and transport, all the way to waste. One of the first steps is the <strong>inventory</strong>, whose goal is to list all processes and everything that goes in and comes out of them.</div>
       <ol class="steps">
         <li>Each block on the canvas is one <strong>process</strong> (e.g. a mill or a bakery). Drag cards from the tray into the right blocks. Which block a card belongs to is up to you to figure out.</li>
         <li>The card <strong>colour</strong> tells you what it is:
@@ -513,6 +513,14 @@ const WHATIF = {
            en: 'Which way of drying hands has the smallest carbon footprint?' },
     options: [{ id: 'towel', cs: 'Papírové ručníky', en: 'Paper towels' }, { id: 'dryer', cs: 'Elektrická sušička', en: 'Electric dryer' }, { id: 'pants', cs: 'Kalhoty', en: 'Trousers' }],
     correct: null,
+    verdicts: {
+      towel: { kind: 'right', cs: 'Z obou počítaných variant ano: papírové ručníky 5 g proti 10 g u sušičky. A co kalhoty?',
+               en: 'Of the two calculated options, yes: paper towels 5 g versus 10 g for the dryer. But what about the trousers?' },
+      dryer: { kind: 'wrong', cs: 'Elektrická sušička vyjde na 10 g, tedy dvakrát víc než papírové ručníky (5 g). A co kalhoty?',
+               en: 'The electric dryer comes to 10 g, twice as much as the paper towels (5 g). But what about the trousers?' },
+      pants: { kind: 'neutral', cs: 'Na první pohled ano… ale je to tak jednoduché?',
+               en: 'At first sight, yes… but is it that simple?' },
+    },
     explain: {
       cs: 'Otření o kalhoty má na první pohled <strong>nulovou uhlíkovou stopu</strong>. Ale plní opravdu <strong>stejnou funkci</strong>? Ruce nejsou úplně suché a kalhoty je potřeba častěji prát – a praní spotřebovává elektřinu, vodu i prací prostředek. Férově porovnávat můžeme jen varianty, které splní funkční jednotku stejně dobře.',
       en: 'Wiping your hands on your trousers has, at first sight, <strong>zero carbon footprint</strong>. But does it really provide <strong>the same function</strong>? Hands are not fully dry and trousers need washing more often – which uses electricity, water and detergent. We can only fairly compare options that fulfil the functional unit equally well.',
