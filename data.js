@@ -301,7 +301,7 @@ const G1_TEXT = {
     introTitle: 'Životní cyklus chleba',
     intro: `
       <p class="lead">Koupíte v obchodě bochník chleba. Co všechno bylo potřeba, než se dostal do vašeho košíku? Poskládejte jeho životní cyklus!</p>
-      <div class="info-box"><strong>Co je LCA?</strong> Posuzování životního cyklu (LCA – <em>Life Cycle Assessment</em>) je metoda, která hodnotí dopady výrobku na životní prostředí „od kolébky do hrobu“ – od získání surovin přes výrobu a dopravu až po odpad. Prvním krokem je <strong>inventarizace</strong>: sepsat všechny procesy a to, co do nich vstupuje a vystupuje.</div>
+      <div class="info-box"><strong>Co je LCA?</strong> Posuzování životního cyklu (LCA – <em>Life Cycle Assessment</em>) je metoda, která hodnotí dopady výrobku na životní prostředí „od kolébky do hrobu“ – od získání surovin přes výrobu a dopravu až po odpad. Jedním z prvních kroků je <strong>inventarizace</strong>: sepsat všechny procesy a to, co do nich vstupuje a vystupuje.</div>
       <ol class="steps">
         <li>Každý blok na plátně je jeden <strong>proces</strong> (např. mlýn nebo pekárna). Kartičky ze zásobníku přetáhněte do správných bloků. Do kterého bloku kartička patří, musíte zjistit sami.</li>
         <li><strong>Barva</strong> kartičky říká, o co jde:
