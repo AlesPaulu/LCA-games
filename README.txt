@@ -2,11 +2,18 @@ LCA hry – statická webová aplikace
 ==================================
 
 Obsah složky:
-  index.html   – stránka aplikace
+  index.html   – česká verze (výchozí adresa)
+  en/index.html – anglická verze (adresa .../en/)
   style.css    – vzhled
   data.js      – OBSAH HER: texty (CZ/EN), kartičky, správná řešení, otázky „Co když…?“
   app.js       – logika (přetahování, kontrola, nápověda)
   img/         – logo a fotografie (fotky jsou zatím vyříznuté z předloh v nízké kvalitě)
+
+Adresy jazykových verzí:
+  https://.../            – čeština
+  https://.../en/         – angličtina
+  Přepínač CZ/EN v rohu aplikace mezi nimi přepíná a adresa se změní.
+  Funguje i parametr ?lang=en, např. https://.../?lang=en
 
 Nasazení na web ústavu:
   Celou složku „web“ nahrajte na server (např. do podsložky /lca-hry/) a otevřete index.html.
@@ -22,3 +29,5 @@ Výměna fotografií za kvalitnější:
 
 Úprava textů a řešení:
   Vše je v data.js (česky i anglicky vedle sebe).
+  Soubory index.html a en/index.html jsou stejné; liší se jen titulkem stránky
+  a atributy data-lang / data-other na značce <html>.

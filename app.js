@@ -15,7 +15,14 @@
     } catch (e) { /* ignore */ }
   };
 
-  let lang = store.lang === 'en' ? 'en' : 'cs';
+  // jazyk určuje adresa stránky (index.html = čeština, en/ = angličtina),
+  // volitelně jej přepíše parametr ?lang=cs|en
+  const htmlEl = document.documentElement;
+  const urlLang = new URLSearchParams(location.search).get('lang');
+  let lang = ['cs', 'en'].includes(urlLang) ? urlLang
+    : htmlEl.dataset.lang === 'en' ? 'en'
+    : htmlEl.dataset.lang === 'cs' ? 'cs'
+    : store.lang === 'en' ? 'en' : 'cs';
   let game = store.game === 'g2' ? 'g2' : 'g1';
   const seen = store.seen || {};
   const placed = { g1: store.g1 || {}, g2: store.g2 || {} };  // slotId → klíč položky
@@ -809,7 +816,12 @@
   }
 
   document.querySelectorAll('.tab').forEach((b) => b.addEventListener('click', () => { if (b.dataset.game !== game) setGame(b.dataset.game); }));
-  document.querySelectorAll('.lang button').forEach((b) => b.addEventListener('click', () => { if (b.dataset.lang !== lang) setLang(b.dataset.lang); }));
+  document.querySelectorAll('.lang button').forEach((b) => b.addEventListener('click', () => {
+    if (b.dataset.lang === lang) return;
+    // druhá jazyková verze má vlastní adresu – přejdeme na ni (rozehraný stav zůstává uložený)
+    if (htmlEl.dataset.other) { location.href = new URL(htmlEl.dataset.other, location.href).href; return; }
+    setLang(b.dataset.lang);
+  }));
   $('#btn-help').addEventListener('click', showIntro);
   $('#btn-check').addEventListener('click', check);
   $('#btn-hint').addEventListener('click', hint);
