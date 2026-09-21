@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en" data-lang="en" data-other="../">
+<head>
+  <meta charset="utf-8">
+  <base href="../">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LCA games</title>
+  <meta name="description" content="Interactive games about Life Cycle Assessment (LCA) – Department of Sustainability and Product Ecology, UCT Prague">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="img/logo-icon.png">
+  <link rel="alternate" hreflang="cs" href="./">
+  <link rel="alternate" hreflang="en" href="en/">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="https://supre.vscht.cz/" target="_blank" rel="noopener">
+      <img src="img/logo.png" alt="Department of Sustainability and Product Ecology, UCT Prague">
+    </a>
+    <nav class="tabs" role="tablist">
+      <button class="tab" role="tab" data-game="g1"><span class="num">1</span><span data-i18n="tab1"></span></button>
+      <button class="tab" role="tab" data-game="g2"><span class="num">2</span><span data-i18n="tab2"></span></button>
+    </nav>
+    <div class="top-actions">
+      <button class="btn ghost" id="btn-help"><span class="q">?</span><span data-i18n="howToPlay"></span></button>
+      <div class="lang" role="group" aria-label="Language">
+        <button data-lang="cs">CZ</button><button data-lang="en">EN</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="workspace">
+    <section class="stage-area" id="stage-area">
+      <div class="stage-sizer" id="stage-sizer">
+        <div class="stage" id="stage"></div>
+      </div>
+    </section>
+    <aside class="tray" id="tray">
+      <div class="toolbar">
+        <button class="btn primary" id="btn-check" data-i18n="check"></button>
+        <button class="btn" id="btn-hint" data-i18n="hint"></button>
+        <button class="btn" id="btn-solve" data-i18n="solution"></button>
+        <button class="btn" id="btn-reset" data-i18n="reset"></button>
+      </div>
+      <div class="feedback" id="feedback" aria-live="polite"></div>
+      <p class="tray-tip" data-i18n="trayTip"></p>
+      <div class="tray-items" id="tray-items"></div>
+    </aside>
+  </main>
+
+  <footer class="footer">
+    <span data-i18n="footerInst"></span>
+    <span class="sep">·</span>
+    <span><span data-i18n="author"></span> <a href="mailto:paulua@vscht.cz">Aleš Paulu</a> (<a href="mailto:paulua@vscht.cz">paulua@vscht.cz</a>)</span>
+  </footer>
+
+  <div class="modal-backdrop" id="modal" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="modal-close" id="modal-close" aria-label="Close">×</button>
+      <h2 id="modal-title"></h2>
+      <div id="modal-body"></div>
+      <div class="modal-actions" id="modal-actions"></div>
+    </div>
+  </div>
+  <div class="toast" id="toast" hidden></div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
